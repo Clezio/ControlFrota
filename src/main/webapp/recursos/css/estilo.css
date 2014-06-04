@@ -1,1 +1,94 @@
-@CHARSET "ISO-8859-1";
+@CHARSET "UTF-8";
+
+html,body,#wrap {
+	font-family: Arial, Verdana, sans-serif !important;
+	font-size: 10px !important;
+	height: 100%;
+}
+
+body>#wrap {
+	height: auto;
+	min-height: 100%;
+}
+
+#main {
+	overflow: visible;
+	padding-bottom: 90px; /* deve ter a mesma altura do rodapé */
+}
+
+#footer {
+	position: relative;
+	margin-top: -90px; /* valor negativo da altura do rodapé */
+	height: 90px;
+	clear: both;
+	text-align:center;
+	clear: both;
+}
+
+#login {
+	position: absolute;
+	width: 500px;
+	margin-left: -250px;
+	display: none;
+	left: 50%;
+	z-index: -1;
+}
+
+/*Opera Fix*/
+body:before {
+	content: "";
+	height: 100%;
+	float: left;
+	width: 0;
+	margin-top: -32767px;
+}
+
+
+.labelAsterisco {
+	color: red;
+	display: block;
+	float: left;
+	font-weight: bold;
+	text-align: center;
+	width: 4px;
+}
+
+.labelEspacoAsterisco {
+	display: block;
+	float: left;
+	font-weight: bold;
+	text-align: center;
+	visibility:hidden;
+	width: 4px;
+}
+
+.labelCamposObrigatorio {
+	color: red;
+	font-weight: bold
+}
+
+.labelDireito {
+	display: block;
+	float: left;
+	text-align: right;
+	width: 115px;
+}
+
+.labelExternoEsquerdo {
+	display: block;
+	float: left;
+	text-align: right;
+	width: 160px;
+}
+
+.labelEsquerdo {
+	display: block;
+	float: left;
+	text-align: right;
+	width: 140px;
+}
+
+.inputDisabilitado {
+	color: blue !important;
+	font-weight: bold !important;
+}

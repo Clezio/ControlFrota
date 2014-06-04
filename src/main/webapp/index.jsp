@@ -1,2 +1,2 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:forward page="../paginas/principal.jsf"/>
+<jsp:forward page="paginas/principal.jsf"/>
