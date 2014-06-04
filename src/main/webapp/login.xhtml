@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	
+	<f:view contentType="text/html">
+		<h:head>
+			<title>ControlFrota</title>
+			<link rel="stylesheet" type="text/css" href="#{request.contextPath}/recursos/css/estilo.css" />
+		</h:head>
+		
+		<h:body>  
+			<h:form prependId="false">
+				<p:dialog closable="false" draggable="false" header="Área restrita" modal="true" minWidth="300" position="center" resizable="false" showEffect="slide" visible="true" widgetVar="modalLogin" width="300">
+					<center>	 
+						<p:messages id="mensagens" showDetail="true" autoUpdate="true" showSummary="false" />
+						<h:panelGrid columns="2">   		
+							<h:outputLabel value="Login" />
+							<h:inputText id="j_username" maxlength="15" />
+							<h:outputLabel value="Senha" />
+							<h:inputSecret id="j_password" maxlength="8" />
+						</h:panelGrid>
+						<br />
+						<h:commandButton value="Entrar" action="#{loginBean.logar}" />
+					</center>
+				</p:dialog>
+			</h:form>
+		</h:body>
+	</f:view>
+</html>

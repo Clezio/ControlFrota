@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+	<f:view contentType="text/html">
+		<h:head>
+			<title>ControlFrota</title>
+			<link rel="stylesheet" type="text/css" href="#{request.contextPath}/recursos/css/estilo.css" />
+			<link rel="stylesheet" type="text/css" href="#{request.contextPath}/recursos/css/primefaces.css" />
+			<script type="text/javascript" src="#{request.contextPath}/recursos/js/primefaces.js"></script>
+			<script type="text/javascript" src="#{request.contextPath}/recursos/js/mascaras.js"></script>
+			<ui:insert name="head"/>
+		</h:head>
+		<h:body>
+		
+			<!-- ################### Modal de Menssagens ################### -->
+			
+			<p:outputPanel autoUpdate="true" >
+				<p:dialog header="Mensagem" id="dialogMensagemId" modal="true" resizable="false" showEffect="scale" visible="#{facesContext.maximumSeverity != null}" widgetVar="dialogMensagem" width="500">
+					<p:messages showDetail="false" autoUpdate="true" />
+				</p:dialog>
+			</p:outputPanel>
+			
+			<!-- #################### Modal de Progresso ################### -->
+		
+			<p:dialog appendToBody="true" closable="false" header="Aguarde..." modal="true" resizable="false" widgetVar="dlgAguarde" width="235" >
+				<p:ajaxStatus>
+					<f:facet name="start">
+						<p:graphicImage value="/recursos/img/espera.gif" />
+					</f:facet>
+				</p:ajaxStatus>
+			</p:dialog>
+			
+			<p:ajaxStatus onstart="dlgAguarde.show()" oncomplete="dlgAguarde.hide()" />
+			
+			<div id="wrap">				 
+				<div id="header">
+					<p:panel>
+						<div style="float:right; text-align: center;">
+							<h:outputText value="Usuario |" />
+							<a href="#">Início</a>
+							<h:outputText value=" |" />
+							<a href="#">Sair</a>
+			            </div>
+						<h1>ControlFrota</h1>
+					</p:panel>
+					<p:spacer height="3" />
+					<h:form id="frmMenu">
+				 		<p:menubar autoDisplay="true" id="menu">
+							<p:submenu label="Cadastros">
+								<p:menuitem value="Veiculos"/>
+							</p:submenu>
+							<p:submenu label="Relatórios">
+								<p:menuitem value="Consumo por Período/Veículo" />
+							</p:submenu>
+						</p:menubar>
+					</h:form>
+				</div>
+				<p:spacer height="10" />
+				<div id="main">
+			 		<ui:insert name="conteudo"/>
+				</div>				 
+			</div>
+			<p:spacer height="10" />
+			<div id="footer">
+				<p:panel>						
+					<h4>Sistema de Controle de Frota</h4>
+					<h5>Todos os direitos reservados - 2014 - ABCDario</h5>
+				</p:panel>
+			</div>
+		</h:body>
+	</f:view>
+</html>

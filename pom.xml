@@ -107,6 +107,14 @@
 		
 		<!-- ######################## Logs e Testes ######################## -->
 		
+		<!-- ############################ Outros ########################### -->
+		
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>3.7.5</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.sun.facelets</groupId>
 			<artifactId>jsf-facelets</artifactId>
