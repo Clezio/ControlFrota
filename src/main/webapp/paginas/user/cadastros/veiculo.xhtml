@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/paginas/principal.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="conteudo">
+		<h:form id="frmVeiculo">
+			<div align="left">
+				<h:outputLabel styleClass="labelCamposObrigatorio" value="* Campos com preenchimento obrigatório" />
+			</div>
+			<p:toolbar>
+				<p:toolbarGroup align="right">
+					<p:commandButton icon="ui-icon-document" id="btnLimpar" process="@this" update="frmVeiculo" value="Limpar" />
+					<p:tooltip for="btnLimpar" value="Limpar Tela" />
+					<p:commandButton icon="ui-icon-search" id="btnPesquisar" onsuccess="modalPesquisarVeiculo.show();" process="@this" update=":frmModalPesquisarVeiculo:pnlModalPesquisarVeiculo" value="Pesquisar" />
+					<p:tooltip for="btnPesquisar" value="Pesquisar Veículo" />
+					<p:separator />
+					<p:commandButton icon="ui-icon-disk" id="btnSalvar" update="@form" value="Salvar"/>
+					<p:tooltip for="btnSalvar" value="Salvar Veículo" />
+				</p:toolbarGroup>
+			</p:toolbar>
+			<p:spacer height="10"/>
+			<p:panel id="pnlGeral" header="Cadastro de Veículos">
+				<h:panelGroup>
+					<p:panelGrid>
+						<p:row>
+							<p:column>
+								<h:outputLabel styleClass="labelExternoEsquerdo" value="Placa:" />
+							</p:column>
+							<p:column>
+								<h:outputLabel styleClass="labelAsterisco" value="*" />
+							</p:column>
+							<p:column>
+								<p:inputMask id="inputPlaca" label="Placa" mask="aaa-9999" required="true" value="">
+<!-- 									<p:ajax event="change" listener="#{veiculoBean.recuperarVeiculo}" update="pnlDados" /> -->
+								</p:inputMask>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</h:panelGroup>
+				<h:panelGroup id="pnlDados">
+					<p:panelGrid>
+						<p:row>
+							<p:column>
+								<h:outputLabel styleClass="labelExternoEsquerdo" value="Marca:" />
+							</p:column>
+							<p:column>
+								<h:outputLabel styleClass="labelAsterisco" value="*" />
+							</p:column>
+							<p:column>
+								<p:inputText label="Marca" maxlength="30" required="true" value="" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputLabel styleClass="labelExternoEsquerdo" value="Modelo:" />
+							</p:column>
+							<p:column>
+								<h:outputLabel styleClass="labelAsterisco" value="*" />
+							</p:column>
+							<p:column>
+								<p:inputText label="Modelo" maxlength="30" required="true" value="" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputLabel styleClass="labelExternoEsquerdo" value="Ano:" />
+							</p:column>
+							<p:column>
+								<h:outputLabel styleClass="labelAsterisco" value="*" />
+							</p:column>
+							<p:column>
+								<p:inputText label="Ano" maxlength="4" onkeypress="return bloqueiaCaracteresNaoNumericos(event)" required="true" value="" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputLabel styleClass="labelExternoEsquerdo" value="Cor:" />
+							</p:column>
+							<p:column>
+								<h:outputLabel styleClass="labelAsterisco" value="*" />
+							</p:column>
+							<p:column>
+								<p:inputText label="Cor" maxlength="20" required="true" value="" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputLabel styleClass="labelExternoEsquerdo" value="Categoria:" />
+							</p:column>
+							<p:column>
+								<h:outputLabel styleClass="labelAsterisco" value="*" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu label="Categoria" required="true" value="#{veiculoBean.veiculo.categoria}">
+										<f:selectItem itemLabel="Selecione..." />
+										<f:selectItem itemLabel="ACC" itemValue="ACC" />
+										<f:selectItem itemLabel="A" itemValue="A" />
+										<f:selectItem itemLabel="B" itemValue="B" />
+										<f:selectItem itemLabel="C" itemValue="C" />
+										<f:selectItem itemLabel="D" itemValue="D" />
+										<f:selectItem itemLabel="E" itemValue="E" />
+									</p:selectOneMenu>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<h:outputLabel styleClass="labelExternoEsquerdo" value="Observação:" />
+							</p:column>
+							<p:column>
+								<h:outputLabel styleClass="labelEspacoAsterisco" value="*" />
+							</p:column>
+							<p:column>
+								<p:inputTextarea maxlength="255" value="" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</h:panelGroup>
+			</p:panel>
+		</h:form>
+		
+		<!-- ############### Modal para Pesquisa de Veículos ############### -->
+		
+		<h:form id="frmModalPesquisarVeiculo">
+			<p:dialog id="modalPesquisarVeiculoID" header="Pesquisa de Veículo" hideEffect="scale" modal="true" height="410" width="700" draggable="true" resizable="false" showEffect="scale" widgetVar="modalPesquisarVeiculo" >		
+				<h:panelGroup id="pnlModalPesquisarVeiculo">
+					<p:panel header="Buscar por" toggleable="true">
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<h:outputLabel value="Placa:" />
+								</p:column>
+								<p:column>
+									<p:inputText value="" />
+								</p:column>
+								<p:column>
+									<p:commandButton icon="ui-icon-search" update="tabelaVeiculos" value="Pesquisar"/>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:panel>
+					<p:dataTable emptyMessage="Sem Dados" id="tabelaVeiculos" paginator="true" paginatorPosition="bottom" rows="6" value="" var="veiculo" >
+						<f:facet name="header">
+							<h:outputLabel value="Lista de Veículos Cadastrados" />
+						</f:facet>
+						<p:column headerText="Placa" style="width:100px; text-align: center;">
+							<h:outputText value="" />
+						</p:column>
+						<p:column headerText="Marca" style="text-align: center;">
+							<h:outputText value="" />
+						</p:column>
+						<p:column headerText="Modelo" style="text-align: center;">
+							<h:outputText value="" />
+						</p:column>
+						<p:column headerText="Categoria" style="width:80px; text-align: center;">
+							<h:outputText value="" />
+						</p:column>
+						<p:column headerText="Ações" style="width:40px; text-align: center;" >
+							<p:panelGrid>
+								<p:row>
+									<p:column>
+										<p:commandLink id="linkEditarVeiculo" onclick="modalPesquisarVeiculo.hide();" styleClass="ui-icon ui-icon-pencil" update=":frmVeiculo:pnlGeral" >
+<!-- 											<f:setPropertyActionListener target="#{veiculoBean.veiculo}" value="#{veiculo}" /> -->
+										</p:commandLink>
+										<p:tooltip for="linkEditarVeiculo" value="Editar este Veículo"/>	
+									</p:column>
+									<p:column>
+										<p:commandLink id="linkExcluirVeiculo" oncomplete="confirmacaoExcluirVeiculo.show()" styleClass="ui-icon ui-icon-trash" >
+<!-- 											<f:setPropertyActionListener target="#{veiculoBean.veiculo}" value="#{veiculo}" /> -->
+										</p:commandLink>
+										<p:tooltip for="linkExcluirVeiculo" value="Excluir este Veículo" />		
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+		
+		<!-- ############### Modal para Exclusão de Veículo ################ -->
+		
+		<h:form id="frmConfirmacaoExcluirVeiculo">
+			<p:dialog appendToBody="true" closable="false" id="confirmacaoExcluirVeiculoId" header="Confimação de Exclusão" height="90" modal="true" resizable="false" widgetVar="confirmacaoExcluirVeiculo" width="550" >
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<p:graphicImage styleClass="ui-icon ui-icon-alert"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="Deseja excluir este Veículo?" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:spacer height="20" />
+				<p:toolbar>
+					<p:toolbarGroup align="right">
+						<p:commandButton value="Sim" oncomplete="confirmacaoExcluirVeiculo.hide()" update=":frmModalPesquisarVeiculo:tabelaVeiculos"/>
+						<p:commandButton value="Não" oncomplete="confirmacaoExcluirVeiculo.hide()" />
+					</p:toolbarGroup>
+				</p:toolbar>		
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
