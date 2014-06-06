@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+	
+	<f:view contentType="text/html">
+		<h:head>
+			<title>ControlFrota</title>
+			<link rel="stylesheet" type="text/css" href="#{request.contextPath}/recursos/css/estilo.css" />
+			<link rel="stylesheet" type="text/css" href="#{request.contextPath}/recursos/css/primefaces.css" />
+			<script type="text/javascript" src="#{request.contextPath}/recursos/js/primefaces.js" />
+		</h:head>
+ 		
+ 		<h:body style="font-size: 10pt">
+ 			<p:dialog closable="true" draggable="false" header="Acesso Negado!" modal="true" minWidth="300" position="center" resizable="false" showEffect="slide" visible="true" widgetVar="modalNegado" width="300">
+				<center>
+					<img src="#{request.contextPath}/recursos/img/acesso_negado.gif" />
+					<br />
+					<br />
+					<br />	   		    	  	   		    	  	 
+					<a href="#{request.contextPath}/paginas/principal.jsf">Voltar</a>
+				</center>
+			</p:dialog>
+		</h:body>
+	</f:view>
+</html>

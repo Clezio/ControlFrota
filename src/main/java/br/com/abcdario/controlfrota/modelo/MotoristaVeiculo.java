@@ -25,11 +25,11 @@ public class MotoristaVeiculo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "codigoInstrutorVeiculo")
+	@Column(name = "codigoMotoristaVeiculo")
 	private Integer codigo;
 
 	@ManyToOne
-	@JoinColumn(name = "instrutor")
+	@JoinColumn(name = "motorista")
 	private Motorista motorista;
 
 	@ManyToOne

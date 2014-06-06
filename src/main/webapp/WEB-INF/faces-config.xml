@@ -4,6 +4,33 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
     version="2.2">
+    
+   	<!-- ############################ Converters ########################### -->
+	
+	<converter>
+		<converter-id>conversorCalendar</converter-id>
+		<converter-class>br.com.abcdario.controlfrota.util.ConversorCalendar</converter-class>
+	</converter>
+	<converter>
+		<converter-id>conversorCep</converter-id>
+		<converter-class>br.com.abcdario.controlfrota.util.ConversorCep</converter-class>
+	</converter>
+	<converter>
+		<converter-id>conversorCNPJ</converter-id>
+		<converter-class>br.com.abcdario.controlfrota.util.ConversorCNPJ</converter-class>
+	</converter>
+	<converter>
+		<converter-id>conversorCPF</converter-id>
+		<converter-class>br.com.abcdario.controlfrota.util.ConversorCPF</converter-class>
+	</converter>
+	<converter>
+		<converter-id>conversorDouble</converter-id>
+		<converter-class>br.com.abcdario.controlfrota.util.ConversorDouble</converter-class>
+	</converter>
+	<converter>
+		<converter-id>conversorEntidadeBase</converter-id>
+		<converter-class>br.com.abcdario.controlfrota.util.ConversorEntidadeBase</converter-class>
+	</converter>
 
 	<!-- ######################## Regra de Navegação ####################### -->
 	<navigation-rule>
@@ -16,4 +43,20 @@
 			<to-view-id>/paginas/user/cadastros/veiculo.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<!-- ####################### Transaction Manager ####################### -->
+	
+	<application>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+		<message-bundle>br.com.abcdario.controlfrota.util.messages</message-bundle>
+		<locale-config>
+			<default-locale>pt_BR</default-locale>
+			<supported-locale>pt_BR</supported-locale>
+			<supported-locale>en_US</supported-locale>
+		</locale-config>
+	</application>
+	
+	<lifecycle>
+		<phase-listener>br.com.abcdario.controlfrota.seguranca.LoginErrorPhaseListener</phase-listener>
+	</lifecycle>
 </faces-config>
