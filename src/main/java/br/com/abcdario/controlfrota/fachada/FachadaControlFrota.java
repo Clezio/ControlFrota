@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.abcdario.controlfrota.modelo.Cidade;
 import br.com.abcdario.controlfrota.modelo.Estado;
+import br.com.abcdario.controlfrota.modelo.Motorista;
 import br.com.abcdario.controlfrota.modelo.Perfil;
 import br.com.abcdario.controlfrota.modelo.PessoaFisica;
 import br.com.abcdario.controlfrota.modelo.Usuario;
@@ -24,6 +25,24 @@ public interface FachadaControlFrota {
 	Estado recuperarEstado(Integer codigo);
 
 	List<Estado> recuperarEstados();
+
+	/* ############################# Motorista ############################## */
+
+	void salvarOuAtualizarMotorista(Motorista motorista);
+
+	void excluirMotorista(Motorista motorista);
+
+	Motorista recuperarMotorista(Integer codigo);
+
+	List<Motorista> recuperarMotoristas();
+
+	Motorista recuperarMotorista(Long cnh);
+
+	Motorista recuperarMotoristaPorCpf(Long cpf);
+
+	Motorista recuperarMotorista(PessoaFisica pessoaFisica);
+
+	List<Motorista> recuperarMotoristas(String nome);
 
 	/* ############################### Perfil ############################### */
 

@@ -1,0 +1,382 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/paginas/principal.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="conteudo">
+		<h:form id="frmMotorista">
+			<div align="left">
+				<h:outputLabel styleClass="labelCamposObrigatorio" value="* Campos com preenchimento obrigatório" />
+			</div>
+			<p:toolbar>
+				<p:toolbarGroup align="right">
+					<p:commandButton action="#{motoristaBean.limparTela}" icon="ui-icon-document" id="btnLimpar" process="@this" update="frmMotorista" value="Limpar" />
+					<p:tooltip for="btnLimpar" value="Limpar Tela" />
+					<p:commandButton action="#{motoristaBean.limparListaMotoristas}" icon="ui-icon-search" id="btnPesquisar" onsuccess="modalPesquisarMotorista.show();" process="@this" update=":frmModalPesquisarMotorista:pnlModalPesquisaMotorista" value="Pesquisar" />
+					<p:tooltip for="btnPesquisar" value="Pesquisar Motorista" />
+					<p:separator />
+					<p:commandButton action="#{motoristaBean.salvar}" icon="ui-icon-disk" id="btnSalvar" update="@form" value="Salvar"/>
+					<p:tooltip for="btnSalvar" value="Salvar Motorista" />
+				</p:toolbarGroup>
+			</p:toolbar>
+			<p:spacer height="10"/>
+			<p:panel id="pnlGeral" header="Cadastro de Motoristas">
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<h:outputLabel styleClass="labelExternoEsquerdo" value="CPF:" />
+						</p:column>
+						<p:column>
+							<h:outputLabel styleClass="labelAsterisco" value="*" />
+						</p:column>
+						<p:column>
+							<p:inputMask converter="conversorCPF" id="inputCPF" label="CPF" mask="999.999.999-99" required="true" value="#{motoristaBean.pessoaFisica.cpf}">
+								<p:ajax event="change" listener="#{motoristaBean.recuperarMotoristaPorCpf}" update="inputCPF, tabGeral" />
+							</p:inputMask>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:tabView effect="fade" id="tabGeral">
+					<p:tab title="Dados Pessoais" >
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Nome:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText label="Nome" maxlength="80" required="true" value="#{motoristaBean.pessoaFisica.nome}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Sexo:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:selectOneRadio label="Sexo" required="true" value="#{motoristaBean.pessoaFisica.sexo}">
+										<f:selectItem itemLabel="Masculino" itemValue="M" />
+										<f:selectItem itemLabel="Femenino" itemValue="F" />
+									</p:selectOneRadio>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Data de Nascimento:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:calendar converter="conversorCalendar" label="Data de Nascimento" locale="pt_BR" navigator="true" pattern="dd/MM/yyyy" required="true" showButtonPanel="true" showOn="button" value="#{motoristaBean.pessoaFisica.dataNascimento}" yearRange="c-100:c+0" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="CNH:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText label="CNH" maxlength="16" required="true" value="#{motoristaBean.motorista.cnh}"/>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Data de Vencimento:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:calendar converter="conversorCalendar" label="Data de Vencimento" locale="pt_BR" navigator="true" pattern="dd/MM/yyyy" required="true" showButtonPanel="true" showOn="button" value="#{motoristaBean.motorista.dataValidadeCnh}" yearRange="c-10:c+10" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Categoria:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:selectOneMenu label="Categoria" required="true" value="#{motoristaBean.motorista.categoriaCnh}">
+										<f:selectItem itemLabel="Selecione..." />
+										<f:selectItem itemLabel="ACC" itemValue="ACC" />
+										<f:selectItem itemLabel="A" itemValue="A" />
+										<f:selectItem itemLabel="B" itemValue="B" />
+										<f:selectItem itemLabel="C" itemValue="C" />
+										<f:selectItem itemLabel="D" itemValue="D" />
+										<f:selectItem itemLabel="E" itemValue="E" />
+										<f:selectItem itemLabel="AB" itemValue="AB" />
+										<f:selectItem itemLabel="AC" itemValue="AC" />
+										<f:selectItem itemLabel="AD" itemValue="AD" />
+										<f:selectItem itemLabel="AE" itemValue="AE" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Estado Civil:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:selectOneMenu label="Estado Civil" required="true" value="#{motoristaBean.pessoaFisica.estadoCivil}">
+										<f:selectItem itemLabel="Selecione..." />
+										<f:selectItem itemLabel="Casado(a)" itemValue="casado" />
+										<f:selectItem itemLabel="Divorciado(a)" itemValue="divorciado" />
+										<f:selectItem itemLabel="Solteiro(a)" itemValue="solteiro" />
+										<f:selectItem itemLabel="Viúvo(a)" itemValue="viuvo" />
+										<f:selectItem itemLabel="Outros" itemValue="outros" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="RG:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText label="RG" maxlength="15" onkeypress="return bloqueiaCaracteresNaoNumericos(event)" required="true" value="#{motoristaBean.pessoaFisica.rg}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Orgão Expedidor:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText label="Orgão Expedidor" maxlength="25" required="true" value="#{motoristaBean.pessoaFisica.orgaoEmissor}"/>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="UF do Expedidor:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:selectOneMenu converter="conversorEntidadeBase" label="UF do Expedidor" required="true" value="#{motoristaBean.pessoaFisica.ufOrgaoEmissor}">
+										<f:selectItem itemLabel="Selecione ..." />
+										<f:selectItems value="#{motoristaBean.listaEstados}" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Data de Expedição:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:calendar converter="conversorCalendar" label="Data de Expedição" locale="pt_BR" navigator="true" pattern="dd/MM/yyyy" required="true" showButtonPanel="true" showOn="button" value="#{motoristaBean.pessoaFisica.dataExpedicaoRg}" yearRange="c-90:c+10" />
+								</p:column>
+							</p:row>
+
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="Endereço">
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="CEP:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputMask converter="conversorCep" label="CEP" mask="99.999-999" required="true" value="#{motoristaBean.pessoaFisica.endereco.cep}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Logradouro:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText label="Logradouro" maxlength="80" required="true" value="#{motoristaBean.pessoaFisica.endereco.logradouro}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Complemento:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelEspacoAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText maxlength="30" value="#{motoristaBean.pessoaFisica.endereco.complemento}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Número:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText label="Número" maxlength="8" required="true" value="#{motoristaBean.pessoaFisica.endereco.numero}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Bairro:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelEspacoAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText maxlength="30" value="#{motoristaBean.pessoaFisica.endereco.bairro}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Estado:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:selectOneMenu converter="conversorEntidadeBase" label="Estado" required="true" value="#{motoristaBean.estado}">
+										<f:selectItem itemLabel="Selecione ..." />
+										<f:selectItems value="#{motoristaBean.listaEstados}" var="estado" />
+										<p:ajax event="change" listener="#{motoristaBean.recuperarCidadesPorEstado}" update="cmbCidades" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Cidade:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:selectOneMenu converter="conversorEntidadeBase" id="cmbCidades" label="Cidade" required="true" value="#{motoristaBean.cidade}">
+										<f:selectItem itemLabel="Selecione..." />
+										<f:selectItems value="#{motoristaBean.listaCidades}" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="Outras Opções" >
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Observação:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelEspacoAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputTextarea maxlength="255" value="#{motoristaBean.motorista.observacao}"/>
+								</p:column>
+							</p:row>
+						</p:panelGrid>			
+					</p:tab>
+				</p:tabView>
+			</p:panel>
+		</h:form>
+		
+		<!-- ############## Modal para Pesquisa de Motoristas ############## -->
+		
+		<h:form id="frmModalPesquisarMotorista">
+			<p:dialog id="modalPesquisarMotoristaID" header="Pesquisa de Motorista" hideEffect="scale" modal="true" height="410" width="700" draggable="true" resizable="false" showEffect="scale" widgetVar="modalPesquisarMotorista" >
+				<h:panelGroup id="pnlModalPesquisaMotorista">		
+					<p:panel header="Buscar por" toggleable="true">
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<h:outputLabel value="Nome:" />
+								</p:column>
+								<p:column>
+									<p:inputText maxlength="255" size="57" value="#{motoristaBean.nome}" />
+								</p:column>
+								<p:column>
+									<p:commandButton action="#{motoristaBean.recuperarMotoristasPorNome}" icon="ui-icon-search" update="tabelaMotoristas" value="Pesquisar"/>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:panel>
+					<p:dataTable emptyMessage="Sem Dados" id="tabelaMotoristas" paginator="true" paginatorPosition="bottom" rows="6" value="#{motoristaBean.listaMotoristas}" var="motorista" >
+						<f:facet name="header">
+							<h:outputLabel value="Lista de Motoristas Cadastrados" />
+						</f:facet>
+						<p:column headerText="Nome">
+							<h:outputText value="#{motorista.pessoaFisica.nome}" />
+						</p:column>
+						<p:column headerText="CNH" style="width:100px; text-align: center;">
+							<h:outputText value="#{motorista.cnh}" />
+						</p:column>
+						<p:column headerText="Categoria" style="width:80px; text-align: center;">
+							<h:outputText value="#{motorista.categoriaCnh}" />
+						</p:column>
+						<p:column headerText="Ações" style="width:40px; text-align: center;" >
+							<p:panelGrid>
+								<p:row>
+									<p:column>
+										<p:commandLink id="linkEditarMotorista" onclick="modalPesquisarMotorista.hide();" styleClass="ui-icon ui-icon-pencil" update=":frmMotorista:pnlGeral" >
+											<f:setPropertyActionListener target="#{motoristaBean.motorista}" value="#{motorista}" />
+										</p:commandLink>
+										<p:tooltip for="linkEditarMotorista" value="Editar este Motorista"/>	
+									</p:column>
+									<p:column>
+										<p:commandLink id="linkExcluirMotorista" oncomplete="confirmacaoExcluirMotorista.show()" styleClass="ui-icon ui-icon-trash" >
+											<f:setPropertyActionListener target="#{motoristaBean.motorista}" value="#{motorista}" />
+										</p:commandLink>
+										<p:tooltip for="linkExcluirMotorista" value="Excluir este Motorista" />		
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+		
+		<!-- ############## Modal para Exclusão de Motorista  ############## -->
+		
+		<h:form id="frmConfirmacaoExcluirMotorista">
+			<p:dialog appendToBody="true" closable="false" id="confirmacaoExcluirMotoristaId" header="Confimação de Exclusão" height="90" modal="true" resizable="false" widgetVar="confirmacaoExcluirMotorista" width="550" >
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<p:graphicImage styleClass="ui-icon ui-icon-alert"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="Deseja excluir este Motorista?" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:spacer height="20" />
+				<p:toolbar>
+					<p:toolbarGroup align="right">
+						<p:commandButton action="#{motoristaBean.excluir}" value="Sim" oncomplete="confirmacaoExcluirMotorista.hide()" update=":frmModalPesquisarMotorista:tabelaMotoristas"/>
+						<p:commandButton value="Não" oncomplete="confirmacaoExcluirMotorista.hide()" />
+					</p:toolbarGroup>
+				</p:toolbar>		
+			</p:dialog>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

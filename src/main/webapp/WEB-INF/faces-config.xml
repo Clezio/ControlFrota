@@ -39,6 +39,14 @@
 		
 		<!-- ########################## Cadastros ########################## -->
 		<navigation-case>
+			<from-outcome>motorista</from-outcome>
+			<to-view-id>/paginas/user/cadastros/motorista.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>usuario</from-outcome>
+			<to-view-id>/paginas/adm/cadastros/usuario.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>veiculo</from-outcome>
 			<to-view-id>/paginas/user/cadastros/veiculo.xhtml</to-view-id>
 		</navigation-case>

@@ -1,0 +1,365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/paginas/principal.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="conteudo">
+		<h:form id="frmUsuario">
+			<div align="left">
+				<h:outputLabel styleClass="labelCamposObrigatorio" value="* Campos com preenchimento obrigatório" />
+			</div>
+			<p:toolbar>
+				<p:toolbarGroup align="right">
+					<p:commandButton action="#{usuarioBean.limparTela}" icon="ui-icon-document" id="btnLimpar" process="@this" update="frmUsuario" value="Limpar" />
+					<p:tooltip for="btnLimpar" value="Limpar Tela" />
+					<p:commandButton action="#{usuarioBean.limparListaUsuarios}" icon="ui-icon-search" id="btnPesquisar" onsuccess="modalPesquisarUsuario.show();" process="@this" update=":frmModalPesquisarUsuario:pnlModalPesquisarUsuario" value="Pesquisar" />
+					<p:tooltip for="btnPesquisar" value="Pesquisar Usuário" />
+					<p:separator />
+					<p:commandButton action="#{usuarioBean.salvar}" icon="ui-icon-disk" id="btnSalvar" update="@form" value="Salvar" />
+					<p:tooltip for="btnSalvar" value="Salvar Usuário" />
+				</p:toolbarGroup>
+			</p:toolbar>
+			<p:spacer height="10"/>
+			<p:panel id="pnlGeral" header="Cadastro de Usuários">
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<h:outputLabel styleClass="labelExternoEsquerdo" value="CPF:" />
+						</p:column>
+						<p:column>
+							<h:outputLabel styleClass="labelAsterisco" value="*" />
+						</p:column>
+						<p:column>
+							<p:inputMask converter="conversorCPF" id="inputCPF" label="CPF" mask="999.999.999-99" required="true" value="#{usuarioBean.pessoaFisica.cpf}">
+								<p:ajax event="change" listener="#{usuarioBean.recuperarUsuarioPorCpf}" update="inputCPF, tabGeral" />
+							</p:inputMask>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:tabView effect="fade" id="tabGeral">
+					<p:tab title="Dados do Usuário">
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Login:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText label="Login" maxlength="10" required="true" value="#{usuarioBean.usuario.login}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Perfis:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:pickList converter="conversorEntidadeBase" itemLabel="#{perfil}" itemValue="#{perfil}" required="true" value="#{usuarioBean.perfis}" var="perfil"  />
+								</p:column>
+							</p:row>
+
+							<p:row>
+								<p:column>
+									<h:outputLabel for="senha1" styleClass="labelEsquerdo" value="Senha:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+            						<p:password feedback="true" goodLabel="Senha Moderada" id="senha1" label="Campo de Senha 1" match="senha2" maxlength="8" promptLabel="Insira a senha" required="true" strongLabel="Senha Forte" value="#{usuarioBean.usuario.senha}" weakLabel="Senha Fraca" />
+           						</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel for="senha2" styleClass="labelEsquerdo" value="Repita a Senha:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+	           						<p:password feedback="true" goodLabel="Senha Moderada" id="senha2" label="Campo de Senha 2" maxlength="8" promptLabel="Repita a senha" required="true" strongLabel="Senha Forte" value="#{usuarioBean.usuario.senha}" weakLabel="Senha Fraca" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="Dados Pessoais" >
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Nome:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText label="Nome" maxlength="80" required="true" value="#{usuarioBean.pessoaFisica.nome}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Sexo:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:selectOneRadio label="Sexo" required="true" value="#{usuarioBean.pessoaFisica.sexo}">
+										<f:selectItem itemLabel="Masculino" itemValue="M" />
+										<f:selectItem itemLabel="Femenino" itemValue="F" />
+									</p:selectOneRadio>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Data de Nascimento:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:calendar converter="conversorCalendar" label="Data de Nascimento" locale="pt_BR" navigator="true" pattern="dd/MM/yyyy" required="true" showButtonPanel="true" showOn="button" value="#{usuarioBean.pessoaFisica.dataNascimento}" yearRange="c-100:c+0" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Estado Civil:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:selectOneMenu label="Estado Civil" required="true" value="#{usuarioBean.pessoaFisica.estadoCivil}">
+										<f:selectItem itemLabel="Selecione..." />
+										<f:selectItem itemLabel="Casado(a)" itemValue="casado" />
+										<f:selectItem itemLabel="Divorciado(a)" itemValue="divorciado" />
+										<f:selectItem itemLabel="Solteiro(a)" itemValue="solteiro" />
+										<f:selectItem itemLabel="Viúvo(a)" itemValue="viuvo" />
+										<f:selectItem itemLabel="Outros" itemValue="outros" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="RG:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText label="RG" maxlength="15" onkeypress="return bloqueiaCaracteresNaoNumericos(event)" required="true" value="#{usuarioBean.pessoaFisica.rg}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Orgão Expedidor:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText label="Orgão Expedidor" maxlength="30" onkeypress="return permitirSomenteLetras(event)" required="true" value="#{usuarioBean.pessoaFisica.orgaoEmissor}"/>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="UF do Expedidor:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:selectOneMenu converter="conversorEntidadeBase" label="UF do Expedidor" required="true" value="#{usuarioBean.pessoaFisica.ufOrgaoEmissor}">
+										<f:selectItem itemLabel="Selecione ..." />
+										<f:selectItems value="#{usuarioBean.listaEstados}" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Data de Expedição:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:calendar converter="conversorCalendar" label="Data de Expedição" locale="pt_BR" navigator="true" pattern="dd/MM/yyyy" required="true" showButtonPanel="true" showOn="button" value="#{usuarioBean.pessoaFisica.dataExpedicaoRg}" yearRange="c-90:c+10" />
+								</p:column>
+							</p:row>
+
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="Endereço">
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="CEP:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputMask converter="conversorCep" label="CEP" mask="99.999-999" required="true" value="#{usuarioBean.pessoaFisica.endereco.cep}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Logradouro:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText label="Logradouro" maxlength="80" required="true" value="#{usuarioBean.pessoaFisica.endereco.logradouro}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Complemento:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelEspacoAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText maxlength="30" value="#{usuarioBean.pessoaFisica.endereco.complemento}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Número:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText label="Número" maxlength="8" required="true" value="#{usuarioBean.pessoaFisica.endereco.numero}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Bairro:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelEspacoAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:inputText maxlength="30" value="#{usuarioBean.pessoaFisica.endereco.bairro}" />
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Estado:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:selectOneMenu converter="conversorEntidadeBase" label="Estado" required="true" value="#{usuarioBean.estado}">
+										<f:selectItem itemLabel="Selecione ..." />
+										<f:selectItems value="#{usuarioBean.listaEstados}" var="estado" />
+										<p:ajax event="change" listener="#{usuarioBean.recuperarCidadesPorEstado}" update="cmbCidades" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+							<p:row>
+								<p:column>
+									<h:outputLabel styleClass="labelEsquerdo" value="Cidade:" />
+								</p:column>
+								<p:column>
+									<h:outputLabel styleClass="labelAsterisco" value="*" />
+								</p:column>
+								<p:column>
+									<p:selectOneMenu converter="conversorEntidadeBase" id="cmbCidades" label="Cidade" required="true" value="#{usuarioBean.cidade}">
+										<f:selectItem itemLabel="Selecione..." />
+										<f:selectItems value="#{usuarioBean.listaCidades}" />
+									</p:selectOneMenu>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:tab>
+				</p:tabView>
+			</p:panel>
+		</h:form>
+		
+		<!-- ############### Modal para Pesquisa de Usuários ############### -->
+		
+		<h:form id="frmModalPesquisarUsuario">
+			<p:dialog id="modalPesquisarUsuarioID" header="Pesquisa de Usuário" hideEffect="scale" modal="true" height="410" width="700" draggable="true" resizable="false" showEffect="scale" widgetVar="modalPesquisarUsuario" >
+				<h:panelGroup id="pnlModalPesquisarUsuario">		
+					<p:panel header="Buscar por" toggleable="true">
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<h:outputLabel value="Nome:" />
+								</p:column>
+								<p:column>
+									<p:inputText maxlength="255" size="57" value="#{usuarioBean.nome}" />
+								</p:column>
+								<p:column>
+									<p:commandButton action="#{usuarioBean.recuperarUsuariosPorNome}" icon="ui-icon-search" update="tabelaUsuarios" value="Pesquisar"/>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:panel>
+					<p:dataTable emptyMessage="Sem Dados" id="tabelaUsuarios" paginator="true" paginatorPosition="bottom" rows="6" value="#{usuarioBean.listaUsuarios}" var="usuario" >
+						<f:facet name="header">
+							<h:outputLabel value="Lista de Usuários Cadastrados" />
+						</f:facet>
+						<p:column headerText="Nome">
+							<h:outputText value="#{usuario.pessoaFisica.nome}" />
+						</p:column>
+						<p:column headerText="Ações" style="width:40px; text-align: center;" >
+							<p:panelGrid>
+								<p:row>
+									<p:column>
+										<p:commandLink id="linkEditarUsuario" onclick="modalPesquisarUsuario.hide();" styleClass="ui-icon ui-icon-pencil" update=":frmUsuario:pnlGeral" >
+											<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{usuario}" />
+										</p:commandLink>
+										<p:tooltip for="linkEditarUsuario" value="Editar este Usuário"/>	
+									</p:column>
+									<p:column>
+										<p:commandLink id="linkExcluirUsuario" oncomplete="confirmacaoExcluirUsuario.show()" styleClass="ui-icon ui-icon-trash" >
+											<f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{usuario}" />
+										</p:commandLink>
+										<p:tooltip for="linkExcluirUsuario" value="Excluir este Usuário" />		
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+		
+		<!-- ################ Modal para Exclusão de Usuário ############### -->
+		
+		<h:form id="frmConfirmacaoExcluirUsuario">
+			<p:dialog appendToBody="true" closable="false" id="confirmacaoExcluirUsuarioId" header="Confimação de Exclusão" height="90" modal="true" resizable="false" widgetVar="confirmacaoExcluirUsuario" width="550" >
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<p:graphicImage styleClass="ui-icon ui-icon-alert"/>
+						</p:column>
+						<p:column>
+							<h:outputText value="Deseja excluir este Usuário?" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:spacer height="20" />
+				<p:toolbar>
+					<p:toolbarGroup align="right">
+						<p:commandButton action="#{usuarioBean.excluir}" value="Sim" oncomplete="confirmacaoExcluirUsuario.hide()" update=":frmModalPesquisarUsuario:tabelaUsuarios"/>
+						<p:commandButton value="Não" oncomplete="confirmacaoExcluirUsuario.hide()" />
+					</p:toolbarGroup>
+				</p:toolbar>		
+			</p:dialog>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

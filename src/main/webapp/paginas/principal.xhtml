@@ -52,10 +52,9 @@
 					<h:form id="frmMenu">
 				 		<p:menubar autoDisplay="true" id="menu">
 							<p:submenu label="Cadastros">
+				 				<p:menuitem action="motorista" ajax="false" value="Motoristas"/>
+								<p:menuitem action="usuario" ajax="false" rendered="#{sec:ifAnyGranted('ROLE_ADM')}" value="Usuários" />
 								<p:menuitem action="veiculo" ajax="false" value="Veículos"/>
-							</p:submenu>
-							<p:submenu label="Relatórios">
-								<p:menuitem value="Consumo por Período/Veículo" />
 							</p:submenu>
 						</p:menubar>
 					</h:form>

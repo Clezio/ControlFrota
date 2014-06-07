@@ -9,11 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.abcdario.controlfrota.controle.CidadeControle;
 import br.com.abcdario.controlfrota.controle.EstadoControle;
+import br.com.abcdario.controlfrota.controle.MotoristaControle;
 import br.com.abcdario.controlfrota.controle.PerfilControle;
 import br.com.abcdario.controlfrota.controle.UsuarioControle;
 import br.com.abcdario.controlfrota.controle.VeiculoControle;
 import br.com.abcdario.controlfrota.modelo.Cidade;
 import br.com.abcdario.controlfrota.modelo.Estado;
+import br.com.abcdario.controlfrota.modelo.Motorista;
 import br.com.abcdario.controlfrota.modelo.Perfil;
 import br.com.abcdario.controlfrota.modelo.PessoaFisica;
 import br.com.abcdario.controlfrota.modelo.Usuario;
@@ -27,6 +29,8 @@ public class FachadaControlFrotaImpl implements FachadaControlFrota {
 	private CidadeControle cidadeControle;
 	@Autowired
 	private EstadoControle estadoControle;
+	@Autowired
+	private MotoristaControle motoristaControle;
 	@Autowired
 	private PerfilControle perfilControle;
 	@Autowired
@@ -61,6 +65,48 @@ public class FachadaControlFrotaImpl implements FachadaControlFrota {
 	@Override
 	public List<Estado> recuperarEstados() {
 		return estadoControle.recuperar();
+	}
+
+	/* ############################# Motorista ############################## */
+
+	@Override
+	public void salvarOuAtualizarMotorista(Motorista motorista) {
+		motoristaControle.salvarOuAtualizar(motorista);
+	}
+
+	@Override
+	public void excluirMotorista(Motorista motorista) {
+		motoristaControle.excluir(motorista);
+	}
+
+	@Override
+	public Motorista recuperarMotorista(Integer codigo) {
+		return motoristaControle.recuperar(codigo);
+	}
+
+	@Override
+	public List<Motorista> recuperarMotoristas() {
+		return motoristaControle.recuperar();
+	}
+
+	@Override
+	public Motorista recuperarMotorista(Long cnh) {
+		return motoristaControle.recuperar(cnh);
+	}
+
+	@Override
+	public Motorista recuperarMotoristaPorCpf(Long cpf) {
+		return motoristaControle.recuperarCpf(cpf);
+	}
+
+	@Override
+	public Motorista recuperarMotorista(PessoaFisica pessoaFisica) {
+		return motoristaControle.recuperar(pessoaFisica);
+	}
+
+	@Override
+	public List<Motorista> recuperarMotoristas(String nome) {
+		return motoristaControle.recuperar(nome);
 	}
 
 	/* ############################### Perfil ############################### */
