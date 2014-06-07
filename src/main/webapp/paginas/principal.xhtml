@@ -41,10 +41,10 @@
 				<div id="header">
 					<p:panel>
 						<div style="float:right; text-align: center;">
-							<h:outputText value="Usuario |" />
-							<a href="#">Início</a>
+							<h:outputText value="#{loginBean.usuario.pessoaFisica.nome} |" />
+							<a href="#{request.contextPath}/paginas/principal.jsf">Início</a>
 							<h:outputText value=" |" />
-							<a href="#">Sair</a>
+							<a href="#{request.contextPath}/j_spring_security_logout">Sair</a>
 			            </div>
 						<h1>ControlFrota</h1>
 					</p:panel>

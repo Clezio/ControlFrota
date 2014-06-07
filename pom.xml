@@ -253,8 +253,8 @@
 		
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
-			<artifactId>aristo</artifactId>
-			<version>1.0.1</version>
+			<artifactId>glass-x</artifactId>
+			<version>1.0.10</version>
 		</dependency>
 		
 		<!-- ######################## Logs e Testes ######################## -->
