@@ -13,12 +13,12 @@
 			</div>
 			<p:toolbar>
 				<p:toolbarGroup align="right">
-					<p:commandButton icon="ui-icon-document" id="btnLimpar" process="@this" update="frmVeiculo" value="Limpar" />
+					<p:commandButton action="#{veiculoBean.limparTela}" icon="ui-icon-document" id="btnLimpar" process="@this" update="frmVeiculo" value="Limpar" />
 					<p:tooltip for="btnLimpar" value="Limpar Tela" />
-					<p:commandButton icon="ui-icon-search" id="btnPesquisar" onsuccess="modalPesquisarVeiculo.show();" process="@this" update=":frmModalPesquisarVeiculo:pnlModalPesquisarVeiculo" value="Pesquisar" />
+					<p:commandButton action="#{veiculoBean.limparListaVeiculos}" icon="ui-icon-search" id="btnPesquisar" onsuccess="modalPesquisarVeiculo.show();" process="@this" update=":frmModalPesquisarVeiculo:pnlModalPesquisarVeiculo" value="Pesquisar" />
 					<p:tooltip for="btnPesquisar" value="Pesquisar Veículo" />
 					<p:separator />
-					<p:commandButton icon="ui-icon-disk" id="btnSalvar" update="@form" value="Salvar"/>
+					<p:commandButton action="#{veiculoBean.salvar}" icon="ui-icon-disk" id="btnSalvar" update="@form" value="Salvar"/>
 					<p:tooltip for="btnSalvar" value="Salvar Veículo" />
 				</p:toolbarGroup>
 			</p:toolbar>
@@ -34,8 +34,8 @@
 								<h:outputLabel styleClass="labelAsterisco" value="*" />
 							</p:column>
 							<p:column>
-								<p:inputMask id="inputPlaca" label="Placa" mask="aaa-9999" required="true" value="">
-<!-- 									<p:ajax event="change" listener="#{veiculoBean.recuperarVeiculo}" update="pnlDados" /> -->
+								<p:inputMask id="inputPlaca" label="Placa" mask="aaa-9999" required="true" value="#{veiculoBean.veiculo.placa}">
+									<p:ajax event="change" listener="#{veiculoBean.recuperarVeiculo}" update="pnlDados" />
 								</p:inputMask>
 							</p:column>
 						</p:row>
@@ -51,7 +51,7 @@
 								<h:outputLabel styleClass="labelAsterisco" value="*" />
 							</p:column>
 							<p:column>
-								<p:inputText label="Marca" maxlength="30" required="true" value="" />
+								<p:inputText label="Marca" maxlength="30" required="true" value="#{veiculoBean.veiculo.marca}" />
 							</p:column>
 						</p:row>
 						<p:row>
@@ -62,7 +62,7 @@
 								<h:outputLabel styleClass="labelAsterisco" value="*" />
 							</p:column>
 							<p:column>
-								<p:inputText label="Modelo" maxlength="30" required="true" value="" />
+								<p:inputText label="Modelo" maxlength="30" required="true" value="#{veiculoBean.veiculo.modelo}" />
 							</p:column>
 						</p:row>
 						<p:row>
@@ -73,7 +73,7 @@
 								<h:outputLabel styleClass="labelAsterisco" value="*" />
 							</p:column>
 							<p:column>
-								<p:inputText label="Ano" maxlength="4" onkeypress="return bloqueiaCaracteresNaoNumericos(event)" required="true" value="" />
+								<p:inputText label="Ano" maxlength="4" onkeypress="return bloqueiaCaracteresNaoNumericos(event)" required="true" value="#{veiculoBean.veiculo.ano}" />
 							</p:column>
 						</p:row>
 						<p:row>
@@ -84,7 +84,7 @@
 								<h:outputLabel styleClass="labelAsterisco" value="*" />
 							</p:column>
 							<p:column>
-								<p:inputText label="Cor" maxlength="20" required="true" value="" />
+								<p:inputText label="Cor" maxlength="20" required="true" value="#{veiculoBean.veiculo.cor}" />
 							</p:column>
 						</p:row>
 						<p:row>
@@ -114,7 +114,7 @@
 								<h:outputLabel styleClass="labelEspacoAsterisco" value="*" />
 							</p:column>
 							<p:column>
-								<p:inputTextarea maxlength="255" value="" />
+								<p:inputTextarea maxlength="255" value="#{veiculoBean.veiculo.observacao}" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
@@ -134,42 +134,42 @@
 									<h:outputLabel value="Placa:" />
 								</p:column>
 								<p:column>
-									<p:inputText value="" />
+									<p:inputText value="#{veiculoBean.placa}" />
 								</p:column>
 								<p:column>
-									<p:commandButton icon="ui-icon-search" update="tabelaVeiculos" value="Pesquisar"/>
+									<p:commandButton action="#{veiculoBean.recuperarVeiculos}" icon="ui-icon-search" update="tabelaVeiculos" value="Pesquisar"/>
 								</p:column>
 							</p:row>
 						</p:panelGrid>
 					</p:panel>
-					<p:dataTable emptyMessage="Sem Dados" id="tabelaVeiculos" paginator="true" paginatorPosition="bottom" rows="6" value="" var="veiculo" >
+					<p:dataTable emptyMessage="Sem Dados" id="tabelaVeiculos" paginator="true" paginatorPosition="bottom" rows="6" value="#{veiculoBean.listaVeiculos}" var="veiculo" >
 						<f:facet name="header">
 							<h:outputLabel value="Lista de Veículos Cadastrados" />
 						</f:facet>
 						<p:column headerText="Placa" style="width:100px; text-align: center;">
-							<h:outputText value="" />
+							<h:outputText value="#{veiculo.placa}" />
 						</p:column>
 						<p:column headerText="Marca" style="text-align: center;">
-							<h:outputText value="" />
+							<h:outputText value="#{veiculo.marca}" />
 						</p:column>
 						<p:column headerText="Modelo" style="text-align: center;">
-							<h:outputText value="" />
+							<h:outputText value="#{veiculo.modelo}" />
 						</p:column>
 						<p:column headerText="Categoria" style="width:80px; text-align: center;">
-							<h:outputText value="" />
+							<h:outputText value="#{veiculo.categoria}" />
 						</p:column>
 						<p:column headerText="Ações" style="width:40px; text-align: center;" >
 							<p:panelGrid>
 								<p:row>
 									<p:column>
 										<p:commandLink id="linkEditarVeiculo" onclick="modalPesquisarVeiculo.hide();" styleClass="ui-icon ui-icon-pencil" update=":frmVeiculo:pnlGeral" >
-<!-- 											<f:setPropertyActionListener target="#{veiculoBean.veiculo}" value="#{veiculo}" /> -->
+											<f:setPropertyActionListener target="#{veiculoBean.veiculo}" value="#{veiculo}" />
 										</p:commandLink>
 										<p:tooltip for="linkEditarVeiculo" value="Editar este Veículo"/>	
 									</p:column>
 									<p:column>
 										<p:commandLink id="linkExcluirVeiculo" oncomplete="confirmacaoExcluirVeiculo.show()" styleClass="ui-icon ui-icon-trash" >
-<!-- 											<f:setPropertyActionListener target="#{veiculoBean.veiculo}" value="#{veiculo}" /> -->
+											<f:setPropertyActionListener target="#{veiculoBean.veiculo}" value="#{veiculo}" />
 										</p:commandLink>
 										<p:tooltip for="linkExcluirVeiculo" value="Excluir este Veículo" />		
 									</p:column>
@@ -198,7 +198,7 @@
 				<p:spacer height="20" />
 				<p:toolbar>
 					<p:toolbarGroup align="right">
-						<p:commandButton value="Sim" oncomplete="confirmacaoExcluirVeiculo.hide()" update=":frmModalPesquisarVeiculo:tabelaVeiculos"/>
+						<p:commandButton action="#{veiculoBean.excluir}" value="Sim" oncomplete="confirmacaoExcluirVeiculo.hide()" update=":frmModalPesquisarVeiculo:tabelaVeiculos"/>
 						<p:commandButton value="Não" oncomplete="confirmacaoExcluirVeiculo.hide()" />
 					</p:toolbarGroup>
 				</p:toolbar>		
