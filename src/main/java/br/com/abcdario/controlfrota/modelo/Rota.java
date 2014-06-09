@@ -23,7 +23,7 @@ public class Rota implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "codigoAgenda")
+	@Column(name = "codigoRota")
 	private Integer codigo;
 
 	@ManyToOne
@@ -49,7 +49,7 @@ public class Rota implements Serializable {
 	private String observacao;
 
 	@Transient
-	private ScheduleEvent dadosAgenda;
+	private ScheduleEvent dadosRota;
 
 	public Rota() {
 
@@ -119,12 +119,12 @@ public class Rota implements Serializable {
 		this.observacao = observacao;
 	}
 
-	public ScheduleEvent getDadosAgenda() {
-		return dadosAgenda;
+	public ScheduleEvent getDadosRota() {
+		return dadosRota;
 	}
 
-	public void setDadosAgenda(ScheduleEvent dadosAgenda) {
-		this.dadosAgenda = dadosAgenda;
+	public void setDadosRota(ScheduleEvent dadosRota) {
+		this.dadosRota = dadosRota;
 	}
 
 	@Override
@@ -154,7 +154,7 @@ public class Rota implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Agenda - Veiculo = " + motoristaVeiculo.getVeiculo().toString() + "\nAgenda - Instrutor = "
+		return "Rota - Veiculo = " + motoristaVeiculo.getVeiculo().toString() + "\nRota - Instrutor = "
 				+ motoristaVeiculo.getMotorista().getPessoaFisica().toString();
 	}
 
