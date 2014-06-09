@@ -57,7 +57,7 @@ public final class GeradorRelatorio {
 			if (tipoRelatorio == TiposRelatorio.XLS)
 				exporter = new net.sf.jasperreports.engine.export.JRXlsExporter();
 
-			if (tipoRelatorio == TiposRelatorio.CVS)
+			if (tipoRelatorio == TiposRelatorio.CSV)
 				exporter = new net.sf.jasperreports.engine.export.JRCsvExporter();
 
 			if (tipoRelatorio == TiposRelatorio.TXT)
