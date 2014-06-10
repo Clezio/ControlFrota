@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Calendar;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -52,10 +51,10 @@ public class PessoaFisica extends Pessoa implements Serializable {
 	@Column(name = "celular")
 	private String celular;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pessoaFisica")
+	@OneToOne(mappedBy = "pessoaFisica")
 	private Motorista motorista;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pessoaFisica")
+	@OneToOne(mappedBy = "pessoaFisica")
 	private Usuario usuario;
 
 	public PessoaFisica() {

@@ -13,7 +13,7 @@
 			</div>
 			<p:toolbar>
 				<p:toolbarGroup align="right">
-					<p:commandButton action="#{motoristaBean.limparTela}" icon="ui-icon-document" id="btnLimpar" process="@this" update="frmMotorista" value="Limpar" />
+					<p:commandButton action="#{motoristaBean.limparTela}" icon="ui-icon-document" id="btnLimpar" process="@this" update="@form" value="Limpar" />
 					<p:tooltip for="btnLimpar" value="Limpar Tela" />
 					<p:commandButton action="#{motoristaBean.limparListaMotoristas}" icon="ui-icon-search" id="btnPesquisar" onsuccess="modalPesquisarMotorista.show();" process="@this" update=":frmModalPesquisarMotorista:pnlModalPesquisaMotorista" value="Pesquisar" />
 					<p:tooltip for="btnPesquisar" value="Pesquisar Motorista" />

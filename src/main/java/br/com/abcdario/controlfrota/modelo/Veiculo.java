@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import br.com.abcdario.controlfrota.util.StringUtil;
+
 @Entity
 @Table(name = "veiculo")
 public class Veiculo implements Serializable {
@@ -66,7 +68,7 @@ public class Veiculo implements Serializable {
 	}
 
 	public void setPlaca(String placa) {
-		this.placa = placa;
+		this.placa = StringUtil.retirarCaracteresEspeciais(placa);
 	}
 
 	public String getMarca() {
