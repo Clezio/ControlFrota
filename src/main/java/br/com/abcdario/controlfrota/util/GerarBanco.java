@@ -21,7 +21,7 @@ public class GerarBanco {
 		scanPackages(cfg, "br.com.abcdario.controlfrota.modelo");
 		cfg.configure();
 		SchemaExport se = new SchemaExport(cfg);
-		se.setOutputFile("C:/Users/Clezio/Desktop/ControlFrotaPostgres.sql");
+		se.setOutputFile("C:/Users/Clezio/workspace/ControlFrota/docs/AutoEscolaPostgres.sql");
 		se.create(true, true);
 	}
 
