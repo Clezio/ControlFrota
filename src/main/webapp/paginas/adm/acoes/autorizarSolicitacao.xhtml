@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/paginas/principal.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="conteudo">
+		<h:form id="frmAutorizarSolicitacao">
+			<div align="left">
+				<h:outputLabel styleClass="labelCamposObrigatorio" value="* Campos com preenchimento obrigatório" />
+			</div>
+			<p:toolbar>
+				<p:toolbarGroup align="right">
+					<p:commandButton icon="ui-icon-document" id="btnLimpar" process="@this" update="frmAutorizarSolicitacao" value="Limpar" />
+					<p:tooltip for="btnLimpar" value="Limpar Tela" />
+					<p:commandButton icon="ui-icon-search" id="btnPesquisar" onsuccess="modalPesquisarSolicitacao.show();" process="@this" value="Pesquisar" />
+					<p:tooltip for="btnPesquisar" value="Pesquisar Solicitações Pendentes" />
+					<p:separator />
+					<p:commandButton icon="ui-icon-disk" id="btnSalvar" update="frmAutorizarSolicitacao" value="Salvar" />
+					<p:tooltip for="btnSalvar" value="Salvar" />
+				</p:toolbarGroup>
+			</p:toolbar>
+			<p:spacer height="10"/>
+			<p:panel id="pnlGeral" header="Autorizar Solicitação">
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+							<h:outputLabel styleClass="labelEsquerdo" value="Solicitação" />
+						</p:column>
+						<p:column>
+							<h:outputLabel styleClass="labelAsterisco" value="*" />
+						</p:column>
+						<p:column>
+							<p:inputMask id="inputSolicitacao" label="Veículo" mask="aaa-9999" required="true" value="">
+<!-- 								<p:ajax event="change" listener="#{gerarNotaBean.recuperarVeiculo}" update="inputPlacaVeiculo, inputNomeVeiculo" /> -->
+							</p:inputMask>
+						</p:column>
+						<p:column>
+							<p:inputText id="inputNomeVeiculo" size="57" value="#{gerarNotaBean.notaAbastecimento.veiculo.modelo}"  />
+						</p:column>
+						<p:column>
+							<p:commandButton icon="ui-icon-search" id="btnPesquisarVeiculo" oncomplete="modalPesquisarVeiculo.show();" process="@this" update=":frmModalPesquisarSolicitacao:pnlModalPesquisarVeiculo" />
+						</p:column>
+					</p:row>					
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+		
+		<!-- ############### Modal para Pesquisa de Solicitações ############### -->
+		
+		<h:form id="frmModalPesquisarSolicitacao">
+			<p:dialog id="modalPesquisarSolicitacaoID" header="Pesquisa de Solicitações" hideEffect="scale" modal="true" height="410" width="700" draggable="true" resizable="false" showEffect="scale" widgetVar="modalPesquisarSolicitacao" >		
+				<h:panelGroup id="pnlModalPesquisarVeiculo">
+					<p:panel header="Buscar por" toggleable="true">
+						<p:panelGrid>
+							<p:row>
+								<p:column>
+									<h:outputLabel value="Solicitação:" />
+								</p:column>
+								<p:column>
+									<p:inputText value="" />
+								</p:column>
+								<p:column>
+									<p:commandButton icon="ui-icon-search" update="tabelaVeiculos" value="Pesquisar"/>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</p:panel>
+					<p:dataTable emptyMessage="Sem Dados" id="tabelaVeiculos" paginator="true" paginatorPosition="bottom" rows="6" value="" var="veiculo" >
+						<f:facet name="header">
+							<h:outputLabel value="Lista de Solicitações Pendentes" />
+						</f:facet>
+						<p:column headerText="Placa" style="width:100px; text-align: center;">
+							<h:outputText value="" />
+						</p:column>
+						<p:column headerText="Marca" style="text-align: center;">
+							<h:outputText value="" />
+						</p:column>
+						<p:column headerText="Modelo" style="text-align: center;">
+							<h:outputText value="" />
+						</p:column>
+						<p:column headerText="Categoria" style="width:80px; text-align: center;">
+							<h:outputText value="" />
+						</p:column>
+						<p:column headerText="Ação" style="width:40px; text-align: center;" >
+							<p:panelGrid>
+								<p:row>
+									<p:column>
+										<p:commandLink id="linkSelecionarSolicitacao" onclick="modalPesquisarSolicitacao.hide();" styleClass="ui-icon ui-icon-check" update=":frmAutorizarSolicitacao:inputSolicitacao" >
+<!-- 											<f:setPropertyActionListener target="#{gerarNotaBean.notaAbastecimento.veiculo}" value="#{veiculo}" /> -->
+										</p:commandLink>
+										<p:tooltip for="linkSelecionarSolicitacao" value="Selecionar esta Solicitação"/>	
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+			</p:dialog>
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

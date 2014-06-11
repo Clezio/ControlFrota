@@ -50,6 +50,17 @@
 			<from-outcome>veiculo</from-outcome>
 			<to-view-id>/paginas/user/cadastros/veiculo.xhtml</to-view-id>
 		</navigation-case>
+		
+		<!-- ############################ Ações ############################ -->		
+		<navigation-case>
+			<from-outcome>solicitarVeiculo</from-outcome>
+			<to-view-id>/paginas/adm/acoes/solicitarVeiculo.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>autorizarSolicitacao</from-outcome>
+			<to-view-id>/paginas/adm/acoes/autorizarSolicitacao.xhtml</to-view-id>
+		</navigation-case>
+		
 	</navigation-rule>
 	
 	<!-- ####################### Transaction Manager ####################### -->

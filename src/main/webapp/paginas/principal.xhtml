@@ -56,6 +56,10 @@
 								<p:menuitem action="usuario" ajax="false" rendered="#{sec:ifAnyGranted('ROLE_ADM')}" value="Usuários" />
 								<p:menuitem action="veiculo" ajax="false" value="Veículos"/>
 							</p:submenu>
+							<p:submenu rendered="#{sec:ifAnyGranted('ROLE_ADM')}" label="Ações">
+								<p:menuitem action="solicitarVeiculo" ajax="false" value="Solicitar Veículo" />
+								<p:menuitem action="autorizarSolicitacao" ajax="false" value="Autorizar Solicitação" />
+							</p:submenu>
 						</p:menubar>
 					</h:form>
 				</div>
