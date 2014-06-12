@@ -23,7 +23,7 @@ public class Rota implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "codigoAgenda")
+	@Column(name = "codigoRota")
 	private Integer codigo;
 
 	@ManyToOne
