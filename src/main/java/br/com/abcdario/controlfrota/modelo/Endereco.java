@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import br.com.abcdario.controlfrota.util.StringUtil;
@@ -23,7 +24,8 @@ public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(generator = "codigoEndereco", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "codigoEndereco", sequenceName = "enderecoSequence")
 	@Column(name = "codigoEndereco")
 	private Integer codigo;
 

@@ -77,7 +77,25 @@
 
     drop table veiculo
 
-    drop sequence hibernate_sequence
+    drop sequence enderecoSequence
+
+    drop sequence motoristaSequence
+
+    drop sequence motoristaVeiculoSequence
+
+    drop sequence notaSequence
+
+    drop sequence perfilSequence
+
+    drop sequence pessoaSequence
+
+    drop sequence postoSequence
+
+    drop sequence rotaSequence
+
+    drop sequence usuarioSequence
+
+    drop sequence veiculoSequence
 
     create table cidade (
         codigoCidade int4 not null,
@@ -189,7 +207,7 @@
     )
 
     create table rota (
-        codigoAgenda int4 not null,
+        codigoRota int4 not null,
         dataAgendada timestamp,
         dataCancelamento timestamp,
         horaFinal timestamp,
@@ -197,7 +215,7 @@
         observacao varchar(255),
         realizada bool,
         motoristaVeiculo int4,
-        primary key (codigoAgenda)
+        primary key (codigoRota)
     )
 
     create table usuario (
@@ -301,4 +319,22 @@
         foreign key (pessoaFisica) 
         references pessoafisica
 
-    create sequence hibernate_sequence
+    create sequence enderecoSequence
+
+    create sequence motoristaSequence
+
+    create sequence motoristaVeiculoSequence
+
+    create sequence notaSequence
+
+    create sequence perfilSequence
+
+    create sequence pessoaSequence
+
+    create sequence postoSequence
+
+    create sequence rotaSequence
+
+    create sequence usuarioSequence
+
+    create sequence veiculoSequence

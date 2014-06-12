@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -25,7 +26,8 @@ public class Perfil implements Serializable, EntidadeBase {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(generator = "codigoPerfil", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "codigoPerfil", sequenceName = "perfilSequence")
 	@Column(name = "codigoPerfil")
 	private Integer codigo;
 

@@ -13,6 +13,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -23,7 +24,8 @@ public class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(generator = "codigoPessoa", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "codigoPessoa", sequenceName = "pessoaSequence")
 	@Column(name = "codigoPessoa")
 	protected Integer codigo;
 

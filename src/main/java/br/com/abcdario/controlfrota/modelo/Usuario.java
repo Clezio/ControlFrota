@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -29,7 +30,8 @@ public class Usuario implements Serializable, UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(generator = "codigoUsuario", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name = "codigoUsuario", sequenceName = "usuarioSequence")
 	@Column(name = "codigoUsuario")
 	private Integer codigo;
 
